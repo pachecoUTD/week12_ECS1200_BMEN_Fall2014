@@ -1,7 +1,6 @@
 function finalPotLocation = move2Location(a, motor5, motorID, potRange, ...
     potDLoc, moveTime, pauseTime, LocTol);
 
-motorID = motor.motorID;
 potID = motorID;
 
 potCLoc = analogRead(a, potID);
@@ -51,7 +50,7 @@ function motorSpeed = compute_speed(dist2go)
 % dist2go varies between 0 and 1
 
 % motorSpeed will range from 100 to 255
-motorSpeed = round(dist2go * 155) + 100;
+motorSpeed = min(255, round(dist2go * 155) + 100);
 
 
 

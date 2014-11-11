@@ -58,9 +58,9 @@ LocTol = 5; % location tolerance
 
 % move all motors the center of the potentiometer range
 for idx = motorID_list, 
-    potDesiredLocation = mean(potRange(idx,:))
+    potDesiredLocation = mean(potRange(idx,:));
     finalPotLocation = move2Location(a, motor5, motorID, ...
-        potDesiredLocation, moveTime, pauseTime, LocTol);
+        potRange(idx,:), potDesiredLocation, moveTime, pauseTime, LocTol);
     fprintf('Final position = %g, Desired position = %g\n', ...
         finalPotLocation, potDesiredLocation);
 end
@@ -70,13 +70,13 @@ for idx = motorID_list,
     for k = 1:2,
         potDesiredLocation = potRange(idx, k)
         finalPotLocation = move2Location(a, motor5, motorID, ...
-            potDesiredLocation, moveTime, pauseTime, LocTol);
+            potRange(idx,:), potDesiredLocation, moveTime, pauseTime, LocTol);
         fprintf('Final position = %g, Desired position = %g\n', ...
             finalPotLocation, potDesiredLocation);
     end
     potDesiredLocation = mean(potRange(idx, :))
     finalPotLocation = move2Location(a, motor5, motorID, ...
-        potDesiredLocation, moveTime, pauseTime, LocTol);
+        potRange(idx,:), potDesiredLocation, moveTime, pauseTime, LocTol);
 end
 
 
