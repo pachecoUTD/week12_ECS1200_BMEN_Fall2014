@@ -6,13 +6,13 @@
 %% Initialize motors and assign ID to variable name
 initialize_motor5
 
-GripperMotion_ID = 1;
-WristMotion_ID = 2;
+GripperMotion_ID = 5;
+WristMotion_ID = 4;
 ElbowMotion_ID = 3;
-BaseMotion_ID = 4;
-BaseRotation_ID = 5;
+BaseMotion_ID = 2;
+BaseRotation_ID = 1;
 
-potRange(GripperMotion_ID, :) = [0 1023];
+potRange(GripperMotion_ID, :) = [300 700];
 potRange(WristMotion_ID, :) = [455 790];
 potRange(ElbowMotion_ID, :) = [250 636];
 potRange(BaseMotion_ID, :) = [380 511];
@@ -21,7 +21,8 @@ potRange(BaseRotation_ID, :) = [280 780];
 
 % list of motors to test. Note gripper is not current on the list due to a
 % possible problem with the system
-motorID_list = [BaseRotation_ID BaseMotion_ID ElbowMotion_ID WristMotion_ID];
+motorID_list = [BaseRotation_ID BaseMotion_ID ElbowMotion_ID WristMotion_ID ...
+                GripperMotion_ID];
 
 
 %% Preliminary error checking
@@ -32,10 +33,13 @@ error_flag = 0;
 for motorID = motorID_list, 
     % get pot signal value before moving motor
     pot_current_location = analogRead(a, motorID);
+    pause(0.1)
+    pot_current_location = analogRead(a, motorID);
     motor5 = motorController(a, motor5, motorID, 'speed', 200);
     motor5 = motorController(a, motor5, motorID, 'forward');
     pause(0.5);
     motor5 = motorController(a, motor5, motorID, 'release');
+    pause(0.2);
     pot_new_location = analogRead(a, motorID);
     if pot_new_location < pot_current_location
         fprintf('Error found on motorID = %g\n', motorID);
@@ -48,8 +52,8 @@ if error_flag == 1
 end
 
 %% motor move2Location parameter
-moveTime = 0.2; % seconds, increment of time to move robot
-pauseTime = 0.1; % seconds, pause time to allow motor to spin down
+moveTime = 0.15; % seconds, increment of time to move robot
+pauseTime = 0.15; % seconds, pause time to allow motor to spin down
 LocTol = 5; % location tolerance
 
 % move all motors the center of the potentiometer range
