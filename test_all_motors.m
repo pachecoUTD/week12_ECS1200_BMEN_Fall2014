@@ -19,8 +19,7 @@ potRange(BaseMotion_ID, :) = [380 511];
 potRange(BaseRotation_ID, :) = [280 780];
 
 
-% list of motors to test. Note gripper is not current on the list due to a
-% possible problem with the system
+% list of motors to test.
 motorID_list = [BaseRotation_ID BaseMotion_ID ElbowMotion_ID WristMotion_ID ...
                 GripperMotion_ID];
 
@@ -33,8 +32,10 @@ error_flag = 0;
 for motorID = motorID_list, 
     % get pot signal value before moving motor
     pot_current_location = analogRead(a, motorID);
-    pause(0.1)
+    pause(0.1);
+    % we sometimes need to re-read the value due to Arduino issues
     pot_current_location = analogRead(a, motorID);
+
     motor5 = motorController(a, motor5, motorID, 'speed', 200);
     motor5 = motorController(a, motor5, motorID, 'forward');
     pause(0.5);
@@ -58,7 +59,10 @@ LocTol = 5; % location tolerance
 
 % move all motors the center of the potentiometer range
 for idx = motorID_list, 
+    % calculate the center of the potentiometer range
     potDesiredLocation = mean(potRange(idx,:));
+
+    % now move to this location
     finalPotLocation = move2Location(a, motor5, motorID, ...
         potRange(idx,:), potDesiredLocation, moveTime, pauseTime, LocTol);
     fprintf('Final position = %g, Desired position = %g\n', ...
