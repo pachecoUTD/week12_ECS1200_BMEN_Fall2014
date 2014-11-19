@@ -59,6 +59,7 @@ LocTol = 5; % location tolerance
 
 % move all motors the center of the potentiometer range
 for idx = motorID_list, 
+    motorID = idx;
     % calculate the center of the potentiometer range
     potDesiredLocation = mean(potRange(idx,:));
 
@@ -71,6 +72,7 @@ end
 
 % move each motor to its min and max positions and then return to center
 for idx = motorID_list,
+    motorID = idx;
     for k = 1:2,
         potDesiredLocation = potRange(idx, k)
         finalPotLocation = move2Location(a, motor5, motorID, ...

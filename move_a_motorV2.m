@@ -1,5 +1,7 @@
-%move one motor
+% initialize 5th motor
+initialize_motor5
 
+%move one motor
 motorID = 3; %corresponds to motor id
 direction = 'backward' % or 'backward'
 runtime = 0.5
