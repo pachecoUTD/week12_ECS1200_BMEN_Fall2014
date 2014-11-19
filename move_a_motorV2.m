@@ -2,9 +2,9 @@
 initialize_motor5
 
 %move one motor
-motorID = 3; %corresponds to motor id
-direction = 'backward' % or 'backward'
-runtime = 0.5
+motorID = 5; %corresponds to motor id
+direction = 'forward' % or 'backward'
+runtime = 0.1
 
 pot_old_location = analogSlowRead(a, motorID)
 
